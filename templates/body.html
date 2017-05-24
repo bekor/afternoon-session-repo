@@ -1,0 +1,8 @@
+{% extends "index.html" %}
+{% block title %}Index{% endblock %}
+{% block body %}
+    {{ super() }}
+    {% for elements in datas %}
+        <p>{{ elements }}</p>
+    {% endfor %}
+{% endblock %}
