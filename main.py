@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import os
 from importlib.machinery import SourceFileLoader
 current_file_path = os.path.dirname(os.path.abspath(__file__))
-query_handler = SourceFileLoader("query_handler", current_file_path + "/server_coonection/query_handler.py").load_module()
+query_handler = SourceFileLoader("query_handler", current_file_path + "/data_manager/query_handler.py").load_module()
 
 
 app = Flask(__name__)
