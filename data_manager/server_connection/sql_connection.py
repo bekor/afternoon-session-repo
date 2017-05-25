@@ -41,4 +41,4 @@ def connection(func):
             if connection:
                 connection.close()
         return sql_query_func
-    return connection
+    return connection_wrapper
