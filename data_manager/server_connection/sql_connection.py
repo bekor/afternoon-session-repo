@@ -1,5 +1,6 @@
 import psycopg2
 import os
+import sys
 from importlib.machinery import SourceFileLoader
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -29,16 +30,22 @@ def connection(func):
 
             # Close communication with the database
             cursor.close()
-
+            print("closed cursor")
         # This exception may not be enough.
-        except psycopg2.DatabaseError as exception:
-            print(exception)
+        except psycopg2.DatabaseError as db_exception:
+            print("From DatabaseError: %s" % db_exception)
             # If you want to handle it on an other level:
-            # raise DatabaseError("Error in connnection: %s" % (exception))
+            raise db_exception.with_traceback(sys.exc_info()[2])
             # finally block will run no matter what
 
         finally:
-            if connection:
-                connection.close()
+            try:
+                if connection:
+                    connection.close()
+                    print("Closed connection")
+            except UnboundLocalError as unbound:
+                print("Couldn't establis connection with the server. %s \n" % unbound)
+
         return sql_query_func
+
     return connection_wrapper

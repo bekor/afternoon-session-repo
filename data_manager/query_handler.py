@@ -8,14 +8,16 @@ sql_connection = SourceFileLoader("sql_connection", current_file_path + "/server
 # If you import only the .py file not a function you have to use the following form of the decorator func.
 @sql_connection.connection
 def select_applicants(cursor):
-    query = """SELECT * FROM applicants;"""
+    query = """SELECT * FROM applicant;"""
     cursor.execute(query)
     rows = cursor.fetchall()
     return rows
+    # except psycopg2.ProgrammingError as er:
+    #     print("Here is the query error: %s" % er)
 
 
 if __name__ == '__main__':
-    dew = select()
+    dew = select_applicants()
     print(dew)
 
 
